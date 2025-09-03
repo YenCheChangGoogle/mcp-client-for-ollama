@@ -1,0 +1,394 @@
+【Ollama】 https://ollama.com 我個人申請的帳密是 yenchechang@gmail.com / 預設密碼
+【Ollama keys】公鑰存放路徑 C:\Users\<username>\.ollama\id_ed25519.pub
+【Ollama Model】模型放置路徑 C:\Users\yench\.ollama\models
+
+【WIN安裝ollama】
+https://ollama.com/download/windows
+WIN版本 放置於 C:\YenCheChang\DeepSeek-R1\OllamaSetup.exe
+或
+【使用指令於docker安裝ollama】
+docker run -d --name ollama -p 11434:11434 -v "C:\Users\yench\.ollama:/root/.ollama"  ollama/ollama:latest
+
+
+【Web UI 安裝使用圖型介面 到EDGE或CHROME瀏覽器】
+    https://chromewebstore.google.com/detail/page-assist-a-web-ui-for/jfgfiigpkhlkbnfnbobbkinehhfdhndo?pli=1
+  
+  
+【進入指定的docker容器】
+  進入ollama容器(假設容器名稱為ollama)範例
+  docker exec -it ollama bash
+  進入此容器後 可以查看已安裝的模型
+  ollama list 
+
+█ 
+
+【ollama指令】
+
+  ollama serve	運行 Ollama
+  ollama create	建立自訂模型
+  ollama show   例如: 觀看 qwen3:8b 模型資訊 ollama show  qwen3:8b
+  ollama run	執行指定模型
+  ollama pull	抓取或下載指定模型到本機
+  ollama push	上傳模型到 ollama hosting
+  ollama list	列出本機模型列表
+  ollama cp		複製現模型到指定namspace
+  ollama rm 	移除模型
+  ollama help
+  
+  刪除模型  例如模型是 llama3
+  ollama rm llama3
+  
+  列出目前已經安裝的模組
+  ollama list
+  
+  查看特定模型的詳細資訊
+  ollama show <model-name>
+  例如 顯示模組名稱是deepseek-r1:32b的模型的詳細資訊範例指令 ollama show deepseek-r1:32b
+   
+  顯示目前正在記憶體中運行的模型
+  ollama ps
+  
+  查看ollama官方提共的模組
+  ollama models
+  
+  啟用WEB網頁服務 瀏覽器檢視
+  ollama serve
+  
+  觀看版本
+  ollama -v
+  
+  觀看提示
+  ollama help
+  
+  -----------------------------------------------------------------------------------------------------------------------
+   Ollama 支援圖片解析的模型
+  【圖片模型】
+  
+  (1)
+  下載模型 例如模型是 llava (最常用的圖片問答模型)
+  ollama pull llava
+  然後執行 讓此模型運作
+  ollama run llava
+  
+  (2)
+  下載模型 例如模型是 llava-phi (更輕量的版本)
+  ollama pull llava-phi
+  然後執行 讓此模型運作
+  ollama run llava-phi
+  
+  (3)
+  下載模型 例如模型是 llama3.2-vision  (Meta 的 Vision 模型)
+  ollama pull llama3.2-vision
+  然後執行 讓此模型運作
+  ollama run llama3.2-vision
+  
+  (4)
+  下載模型 例如模型是 gemma3-vision (Google Gemma 的視覺版本)
+  ollama pull gemma3-vision
+  然後執行 讓此模型運作
+  ollama run gemma3-vision
+  
+  -----------------------------------------------------------------------------------------------------------------------
+  █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █
+  注意: 同時在 C:\GIT\github\jaaz.git\server\user_data\config.toml 加入設定
+  
+  在  [ollama.models] 後面加入 範例
+  [ollama.models]
+  
+  [ollama.models."llama3.1:8b"]
+  type = "text"
+  
+  [ollama.models."llama3.2-vision"]
+  type = "image"
+  
+  [ollama.models."llava:latest"]
+  type = "image"
+  
+  [ollama.models."gemma3-vision"]
+  type = "image"
+  █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ █ 
+  -----------------------------------------------------------------------------------------------------------------------
+  
+  【文字模型】
+  
+  下載模型 例如模型是 llama3.1:8b
+  ollama pull llama3.1:8b
+  
+  下載模型 例如模型是 llama3.1:70b
+  
+  ollama pull llama3.1:70b
+  
+  下載模型 例如模型是 qwen2.5:7b
+  ollama pull qwen2.5:7b
+    
+  下載模型 例如模型是 llama3
+  ollama pull llama3
+  
+  下載模型 例如模型是 deepseek-r1:1.5b
+  ollama pull deepseek-r1:1.5b
+  
+  終端機互動模型 例如模型是 llama3
+  ollama run llama3
+  
+  API使用方式範例
+  curl -X POST http://localhost:11434/v1/completions 
+  -H "Content-Type: application/json" 
+  -d '{
+    "model": "llama3",
+    "prompt": "你好，請介紹一下台灣的歷史"
+  }'
+  
+  -----------------------------------------------------------------------------------------------------------------------
+  
+  已安裝NVIDIA驅動與nvidia-smi工具觀看GPU使用狀態
+  nvidia-smi
+  
+  Ollama官方網站		https://ollama.com/
+  Ollama GitHub文件	https://github.com/ollama/ollama/tree/main/docs
+  Ollama 中文教學		https://zhuanlan.zhihu.com/p/1933184197402526894
+  
+  
+【使用API查詢】（如果 Ollama 服務正在運行）
+  curl http://localhost:11434/api/tags
+  
+【使用API查詢】呼叫使用模型gpt-oss:20b的範例
+  curl -X POST http://localhost:11434/api/generate -H "Content-Type: application/json" -d "{\"model\": \"gpt-oss:20b\", \"system\": \"你是一位航空雷達系統專家, 請用專業語氣回答問題。\", \"prompt\": \"請用繁體中文說明雷達 STCA 的原理\", \"stream\": false}"
+  其中參數 "system": "你是一位航空雷達系統專家, 請用專業語氣回答問題。"	表示設定模型的角色或語氣
+  其中參數 "stream": false 									表示是否使用串流模式（false表示一次性回傳完整結果）
+  
+【使用API查詢】呼叫使用模型deepseek-r1:1.5b的範例
+  curl -X POST http://localhost:11434/api/generate -H "Content-Type: application/json" -d "{\"model\": \"deepseek-r1:1.5b\", \"system\": \"你是一位航空雷達系統專家, 請用專業語氣回答問題。\", \"prompt\": \"請用繁體中文說明雷達 STCA 的原理\", \"stream\": false}"
+  
+  
+【進入指定的docker容器】
+  進入ollama容器(假設容器名稱為ollama)範例
+  docker exec -it ollama bash
+  進入此容器後 可以查看已安裝的模型
+  ollama list 
+
+【模型】參考資訊
+  1.5B Qwen DeepSeek R1 (個人環境已安裝)
+  ollama run deepseek-r1:1.5b
+
+  7B Qwen DeepSeek R1
+  ollama run deepseek-r1:7b
+
+  8B Llama DeepSeek R1
+  ollama run deepseek-r1:8b
+
+  14B Qwen DeepSeek R1
+  ollama run deepseek-r1:14b
+
+  32B Qwen DeepSeek R1 (個人環境已安裝)
+  ollama run deepseek-r1:32b
+
+  70B Llama DeepSeek R1
+  ollama run deepseek-r1:70b
+  
+  DeepSeek-R1-Zero 
+  https://huggingface.co/deepseek-ai/DeepSeek-R1-Zero
+  
+  DeepSeek-R1
+  https://huggingface.co/deepseek-ai/DeepSeek-R1
+  
+  本地部署越獄版
+  7B
+  ollama run huihui_ai/deepseek-r1-abliterated:7b
+  
+  8B
+  ollama run huihui_ai/deepseek-r1-abliterated:8b
+
+  14B (個人環境已安裝)
+  ollama run huihui_ai/deepseek-r1-abliterated:14b
+  
+  32B
+  ollama run huihui_ai/deepseek-r1-abliterated:32b
+  
+  70B
+  ollama run huihui_ai/deepseek-r1-abliterated:70b
+  
+  8B 對中文支援極佳 (個人環境已安裝)
+  ollama run qwen3:8b 
+  
+  30B 對中文支援極佳 
+  ollama run qwen3:30b
+  
+  ollama run llama2
+  ollama run mistral
+  ollama run gemma
+  
+  27B 對中文支援極佳 (個人環境已安裝)
+  ollama run gemma3:27b 
+  
+  gpt-oss:120b
+  ollama run gpt-oss:120b
+  
+  gpt-oss:20b (個人環境已安裝)
+  ollama run gpt-oss:20b
+  
+  
+
+█ 【mcp-client-for-ollama】
+
+範例 需要在PowerShell模式下 終端機互動模型(模型是llama3)
+ollama run llama3
+  
+(1)使用此網址檢查ollama運作狀態(快速驗證ollama是否啟動的好方法) http://localhost:11434/api/tags
+  
+(2)取得mcp-client-for-ollama
+   git clone https://github.com/jonigl/mcp-client-for-ollama.git
+   cd mcp-client-for-ollama.git
+ 
+(3)安裝虛擬環境 
+   conda create -n ollama-client python=3.10 -y
+   或 
+   使用 --no-deps 減少依賴解析（如果你只需要 Python）
+   conda create -n ollama-client python=3.10 --no-deps -y
+  
+(4)啟用虛擬環境
+   conda activate ollama-client
+
+(5)安裝pip
+   conda install pip -y
+   安裝pip並更新Conda
+   conda update -n base -c defaults conda
+
+(6)安裝MCP專案 (以管理者身分執行)
+   cd C:\GIT\github\mcp-client-for-ollama.git
+   python -m pip install .
+   
+(7)安裝後測試 MCP 是否成功
+   ollmcp --help
+
+(8)
+   把目前的conda環境（包含所有套件與版本）匯出成一份內容到environment.yml檔案
+   conda env export --name ollama-client > environment.yml
+   
+   當需要透過environment.yml重建環境時
+   conda env create -f environment.yml
+
+
+(9)ollmcp 相關指令 範例
+   啟用 ollmcp 的自動補全功能 需要在PowerShell模式下
+   
+   ollmcp -a
+   
+   ollmcp --version
+   ollmcp --install-completion
+   ollmcp --show-completion
+   
+   
+   
+█ 一個簡潔的 Ollama GPU 啟動檢查腳本
+  
+  (C:\Docker\ollama\check_ollama_gpu.py)
+  使用方式 python check_ollama_gpu.py 
+  
+  check_ollama_gpu.py 範例內容
+  
+  import os
+  import subprocess
+  import platform
+  def check_nvidia_smi():
+      try:
+          result = subprocess.run(['nvidia-smi'], capture_output=True, text=True)
+          if result.returncode == 0:
+              print("✅ NVIDIA GPU 已偵測到")
+              print(result.stdout.split('\n')[2])  # 顯示 GPU 型號
+              return True
+          else:
+              print("❌ 無法執行 nvidia-smi，請確認 NVIDIA 驅動是否安裝")
+              return False
+      except FileNotFoundError:
+          print("❌ 系統找不到 nvidia-smi，可能未安裝 NVIDIA 驅動")
+          return False
+  def check_ollama_version():
+      try:
+          result = subprocess.run(['ollama', '--version'], capture_output=True, text=True)
+          if result.returncode == 0:
+              print(f"✅ Ollama 版本：{result.stdout.strip()}")
+              return True
+          else:
+              print("❌ 無法執行 ollama，請確認是否已安裝")
+              return False
+      except FileNotFoundError:
+          print("❌ 系統找不到 ollama 指令")
+          return False
+  def check_env_vars():
+      if 'OLLAMA_NO_GPU' in os.environ:
+          print("⚠️ 環境變數 OLLAMA_NO_GPU=1 已設定，Ollama 將強制使用 CPU")
+          return False
+      print("✅ 未偵測到 GPU 禁用環境變數")
+      return True
+  def main():
+      print("🔍 正在檢查 Ollama GPU 啟用狀態...\n")
+      gpu_ok = check_nvidia_smi()
+      ollama_ok = check_ollama_version()
+      env_ok = check_env_vars()
+  
+      if gpu_ok and ollama_ok and env_ok:
+          print("\n🎉 一切正常！Ollama 應該會自動使用 GPU 執行模型")
+      else:
+          print("\n🚧 請根據上方提示修正環境，以啟用 GPU 加速")
+  if __name__ == "__main__":
+      main()
+  
+█ 使用圖片模型 llama3.2-vision 來分析圖片 
+  分析圖片的範例
+  import requests
+  import base64
+  
+  def analyze_image(image_path):
+      with open(image_path, "rb") as image_file:
+          encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
+      
+      response = requests.post(
+          "http://localhost:11434/api/generate",
+          json={
+              "model": "llama3.2-vision",
+              "prompt": "Describe this image in detail",
+              "images": [encoded_image]
+          }
+      )
+      
+      return response.json()["response"]
+  
+  print(analyze_image("test.jpg"))
+  
+  
+█ 使用圖片模型 llama3.2-vision 來建立圖片分析入口
+  來建立圖片分析入口的範例
+  
+  from flask import Flask, request, render_template
+  import os
+  
+  app = Flask(__name__)
+  
+  @app.route('/', methods=['GET', 'POST'])
+  def home():
+      if request.method == 'POST':
+          image = request.files['image']
+          image_path = os.path.join('uploads', image.filename)
+          image.save(image_path)
+          
+          analysis = analyze_image(image_path)
+          return render_template('result.html', analysis=analysis)
+      
+      return render_template('upload.html')
+  
+  if __name__ == '__main__':
+      app.run(host='0.0.0.0', port=5000)
+
+
+
+
+
+█ 使用 Ollama API 直接呼叫 LLaV 範例
+
+  curl http://localhost:11434/api/generate \
+    -d '{
+      "model": "llava",
+      "prompt": "這張圖片裡有什麼？",
+      "images": ["<base64編碼圖片>"]
+    }'
+  
